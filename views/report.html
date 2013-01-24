@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Interface de report de bug de Kpsule</title>
+    <link href="/views/style/brundle.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <h1>reporter un bug</h1>
+    <div class="container">
+      <form action="/send" method="POST">
+	<div class="field">
+	  <label for="product" class="mandatory">Produit concern&eacute;</label>
+	  <select name="product" id="product">
+	    <option value="BO">Back-Office</option>
+	    <option value="KF">Kpsule Flash</option>
+	    <option value="KH">Kpsule HTML</option>
+	    <option value="--">Autre</option>
+	  </select>
+	</div>
+	<div class="field">
+	  <label for="category" class="mandatory">Categorie</label>
+	  <select name="category" id="category">
+	    <option value="Error">Message d'erreur pas explicite</option>
+	    <option value="View">Erreur d'affichage</option>
+	    <option value="Redir">Redirection qui ne marche pas</option>
+	    <option value="--">Autre</option>
+	  </select>
+	</div>
+	<div class="field">
+	  <label for="email" class="mandatory">Votre e-mail</label>
+	  <input type="text" name="email" id="email">
+	</div>
+	<div class="field">
+	  <label for="action" class="mandatory">Page concern&eacute;e</label>
+	  <input type="text" name="action" id="action">
+	</div>
+	<div class="field">
+	  <label for="context">Contexte</label>
+	  <textarea name="context" id="context"></textarea>
+	  <div class="info_label">Une rapide explication de ce que vous faisiez avant l'apparition du bug</div>
+	</div>
+	<div class="field">
+	  <label for="description" class="mandatory">Description</label>
+	  <textarea name="description" id="description"></textarea>
+	  <div class="info_label">Une description detaill&eacute;e du probl&ecirc;me rencontr&eacute; (messages d'erreurs, url, ...)</div>
+	</div>
+	<div class="field">
+	  <label for="screenshot">Joindre un fichier</label>
+	  <input type="file" name="screenshot" id="description" accept="image/*">
+	</div>
+	<div class="field">
+	  <input type="submit" value="envoyer le rapport de bug">
+	</div>
+      </form>
+    </div>
+  </body>
+</html>
