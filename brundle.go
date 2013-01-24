@@ -18,8 +18,7 @@ type BugReport struct {
 
 func (br *BugReport) send() error {
 	title := fmt.Sprintf("[%s][%s] %s", br.Product, br.Category, br.Action)
-	body := fmt.Sprintln("Context:", br.Context)
-	body += fmt.Sprintln("\nDescription:", br.Description)
+	body := fmt.Sprintln("Context:", br.Context, "\nDescription:", br.Description)
 	m := email.NewMessage(title, body)
 	m.To = []string{"bug@kpsule.me"}
 	m.From = br.Email
