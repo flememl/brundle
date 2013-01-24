@@ -31,7 +31,10 @@ func (br *BugReport) send() error {
 	return email.SendUnencrypted("aspmx.l.google.com:25", "", "", m)
 }
 
-var templates = template.Must(template.ParseFiles("views/report.html", "views/success.html"))
+var templates = template.Must(template.ParseFiles(
+	"views/report.html",
+	"views/success.html",
+	"views/error.html"))
 
 func renderTemplate(w http.ResponseWriter, tpl string, br *BugReport) {
 	err := templates.ExecuteTemplate(w, tpl+".html", br)
@@ -48,6 +51,10 @@ func successHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "success", nil)
 }
 
+func errorHandler(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "error", nil)
+}
+
 func sendHandler(w http.ResponseWriter, r *http.Request) {
 	br := &BugReport{
 		Product:     r.FormValue("product"),
@@ -59,7 +66,7 @@ func sendHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err := br.send()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Redirect(w, r, "/error", http.StatusFound)
 		return
 	}
 	http.Redirect(w, r, "/success", http.StatusFound)
@@ -68,6 +75,7 @@ func sendHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", formHandler)
 	http.HandleFunc("/success", successHandler)
+	http.HandleFunc("/error", errorHandler)
 	http.HandleFunc("/send", sendHandler)
 	http.Handle("/views/style/", http.StripPrefix("/views/style/",
 		http.FileServer(http.Dir("views/style"))))

@@ -80,6 +80,10 @@ textarea {
     margin-right: 10px;
 }
 
+.missing {
+    border: 2px solid #e61e7e;
+}
+
 div.info_label {
     font-size: 0.7em;
     width: 140px;
@@ -94,5 +98,5 @@ label {
 
 label.mandatory:after {
     content: " *";
-    color: e61e7e;
+    color: #e61e7e;
 }
