@@ -2,10 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/scorredoira/email"
 	"html/template"
 	"net/http"
-	"github.com/scorredoira/email"
 )
+
+type Config struct {
+	Port string
+}
+
+var config = Config{"8080"}
 
 type BugReport struct {
 	Product     string
@@ -65,5 +71,5 @@ func main() {
 	http.HandleFunc("/send", sendHandler)
 	http.Handle("/views/style/", http.StripPrefix("/views/style/",
 		http.FileServer(http.Dir("views/style"))))
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+config.Port, nil)
 }
