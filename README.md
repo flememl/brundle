@@ -10,3 +10,11 @@ Installation
 * `go build brundle.go`
 * start: `./brundle`
 * stop: `pkill brundle` (I assure you, this will be better soon)
+
+TODO
+----
+
+* File upload and attach to mail
+* Mandatory fields
+* Sweet error messages
+* Clean start/stop options
