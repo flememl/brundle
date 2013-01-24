@@ -11,7 +11,7 @@ type Config struct {
 	Port string
 }
 
-var config = Config{"8080"}
+var config = Config{"8070"}
 
 type BugReport struct {
 	Product     string
