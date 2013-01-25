@@ -17,4 +17,3 @@ TODO
 * Mandatory fields
 * Sweet error messages
 * Clean start/stop options
-* Logging
