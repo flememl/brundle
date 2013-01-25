@@ -29,17 +29,24 @@ type BugReport struct {
 	Screenshot  *UploadedFile
 }
 
-func (br *BugReport) getUploadedFile(r *http.Request) error {
-	file, fheader, err := r.FormFile("screenshot")
-	if err != nil {
-		return err
+func getValues(r *http.Request) (*BugReport, error) {
+	br := &BugReport{
+		Product:     r.FormValue("product"),
+		Category:    r.FormValue("category"),
+		Email:       r.FormValue("email"),
+		Action:      r.FormValue("action"),
+		Context:     r.FormValue("context"),
+		Description: r.FormValue("description"),
 	}
-	data, err := ioutil.ReadAll(file)
-	if err != nil {
-		return err
+	file, fheader, _ := r.FormFile("screenshot")
+	if file != nil {
+		data, err := ioutil.ReadAll(file)
+		if err != nil {
+			return nil, err
+		}
+		br.Screenshot = &UploadedFile{Data: data, Filename: fheader.Filename}
 	}
-	br.Screenshot = &UploadedFile{Data: data, Filename: fheader.Filename}
-	return err
+	return br, nil
 }
 
 func (br *BugReport) send() error {
@@ -49,7 +56,9 @@ func (br *BugReport) send() error {
 	m := email.NewMessage(title, body)
 	m.To = []string{"bug@kpsule.me"}
 	m.From = br.Email
-	m.Attachments[br.Screenshot.Filename] = br.Screenshot.Data
+	if br.Screenshot != nil {
+		m.Attachments[br.Screenshot.Filename] = br.Screenshot.Data
+	}
 	return email.SendUnencrypted("aspmx.l.google.com:25", "", "", m)
 }
 
@@ -65,29 +74,18 @@ func renderTemplate(w http.ResponseWriter, tpl string, br *BugReport) {
 	}
 }
 
-func formHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "report", &BugReport{})
-}
-
-func successHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "success", nil)
-}
-
-func errorHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "error", nil)
+func pageHandler(w http.ResponseWriter, r *http.Request) {
+	page := r.URL.Path[1:]
+	if len(page) == 0 {
+		page = "report"
+	}
+	renderTemplate(w, page, nil)
 }
 
 func sendHandler(w http.ResponseWriter, r *http.Request) {
-	br := &BugReport{
-		Product:     r.FormValue("product"),
-		Category:    r.FormValue("category"),
-		Email:       r.FormValue("email"),
-		Action:      r.FormValue("action"),
-		Context:     r.FormValue("context"),
-		Description: r.FormValue("description"),
-	}
-	err := br.getUploadedFile(r)
+	br, err := getValues(r)
 	if err != nil {
+		/* XXX: Here we should highlight the errors instead */
 		http.Redirect(w, r, "/error", http.StatusFound)
 		return
 	}
@@ -100,9 +98,9 @@ func sendHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", formHandler)
-	http.HandleFunc("/success", successHandler)
-	http.HandleFunc("/error", errorHandler)
+	http.HandleFunc("/", pageHandler)
+	http.HandleFunc("/success", pageHandler)
+	http.HandleFunc("/error", pageHandler)
 	http.HandleFunc("/send", sendHandler)
 	http.Handle("/views/style/", http.StripPrefix("/views/style/",
 		http.FileServer(http.Dir("views/style"))))
