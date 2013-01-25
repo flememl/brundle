@@ -14,7 +14,7 @@ Installation
 TODO
 ----
 
-* File upload and attach to mail
 * Mandatory fields
 * Sweet error messages
 * Clean start/stop options
+* Logging
