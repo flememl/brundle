@@ -1,7 +1,7 @@
 Brundle
 =======
 
-A bug reporting interface for Fevrier46 ; named after Seth Brundle, the most famous bug.
+A bug reporting interface for Fevrier46 ; named after Seth Brundle, the most awesome bug ever.
 
 Installation
 ------------
