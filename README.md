@@ -17,3 +17,5 @@ TODO
 * Mandatory fields
 * Sweet error messages
 * Clean start/stop options
+* Asana integration
+* Outside config file
