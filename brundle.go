@@ -129,6 +129,8 @@ func main() {
 	http.HandleFunc("/success", pageHandler)
 	http.HandleFunc("/error", pageHandler)
 	http.HandleFunc("/send", sendHandler)
+	http.Handle("/favicon.ico", http.StripPrefix("/",
+		http.FileServer(http.Dir("views/images"))))
 	http.Handle("/views/style/", http.StripPrefix("/views/style/",
 		http.FileServer(http.Dir("views/style"))))
 	http.ListenAndServe(":"+config.Port, nil)
