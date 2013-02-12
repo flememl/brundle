@@ -74,10 +74,10 @@ select {
 }
 
 textarea {
-    width: 340px;
+    width: 339px;
     height: 70px;
     float: right;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .missing {
@@ -96,7 +96,24 @@ label {
     display: inline-block;
 }
 
-label.mandatory:after {
+label.required:after {
     content: " *";
     color: #e61e7e;
+}
+
+
+::-webkit-validation-bubble-message {
+    color: #000000;
+    font-family: arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    border-color: #e61e7e;
+    border-width: 2px;
+    margin-top: -1px;
+    -webkit-border-radius: 0px;
+}
+
+::-webkit-validation-bubble-arrow {
+    background: #ffffff;
+    border-color: #e61e7e;
+    border-width: 2px;
 }

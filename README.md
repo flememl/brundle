@@ -3,6 +3,8 @@ Brundle
 
 A bug reporting interface for Fevrier46 ; named after Seth Brundle, the most awesome bug ever.
 
+Note: Required fields are handled by HTML5 inputs.
+
 Installation
 ------------
 
@@ -14,7 +16,6 @@ Installation
 TODO
 ----
 
-* Mandatory fields
 * Sweet error messages
 * Clean start/stop options
 * Asana integration

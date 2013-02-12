@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Interface de rapport de bug de Kpsule</title>
@@ -8,8 +9,9 @@
     <div class="container">
       <form action="/send" method="POST" enctype="multipart/form-data">
 	<div class="field">
-	  <label for="product" class="mandatory">Produit concern&eacute;</label>
-	  <select name="product" id="product">
+	  <label for="product" class="required">Produit concern&eacute;</label>
+	  <select name="product" id="product" required>
+	    <option></option>
 	    <option value="BO">Back-Office</option>
 	    <option value="KF">Kpsule Flash</option>
 	    <option value="KH">Kpsule HTML</option>
@@ -17,8 +19,9 @@
 	  </select>
 	</div>
 	<div class="field">
-	  <label for="category" class="mandatory">Categorie</label>
-	  <select name="category" id="category">
+	  <label for="category" class="required">Categorie</label>
+	  <select name="category" id="category" required>
+	    <option></option>
 	    <option value="Error">Message d'erreur pas explicite</option>
 	    <option value="View">Erreur d'affichage</option>
 	    <option value="Redir">Redirection qui ne marche pas</option>
@@ -26,12 +29,12 @@
 	  </select>
 	</div>
 	<div class="field">
-	  <label for="email" class="mandatory">Votre e-mail</label>
-	  <input type="text" name="email" id="email">
+	  <label for="email" class="required">Votre e-mail</label>
+	  <input type="email" name="email" id="email" required>
 	</div>
 	<div class="field">
-	  <label for="action" class="mandatory">Page concern&eacute;e</label>
-	  <input type="text" name="action" id="action">
+	  <label for="action" class="required">Page concern&eacute;e</label>
+	  <input type="text" name="action" id="action" required>
 	</div>
 	<div class="field">
 	  <label for="context">Contexte</label>
@@ -39,13 +42,13 @@
 	  <div class="info_label">Une rapide explication de ce que vous faisiez avant l'apparition du bug</div>
 	</div>
 	<div class="field">
-	  <label for="description" class="mandatory">Description</label>
-	  <textarea name="description" id="description"></textarea>
+	  <label for="description" class="required">Description</label>
+	  <textarea name="description" id="description" required></textarea>
 	  <div class="info_label">Une description detaill&eacute;e du probl&ecirc;me rencontr&eacute; (messages d'erreurs, url, ...)</div>
 	</div>
 	<div class="field">
 	  <label for="screenshot">Joindre un fichier</label>
-	  <input type="file" name="screenshot" id="description" accept="image/*">
+	  <input type="file" name="screenshot" id="screenshot" accept="image/*">
 	</div>
 	<div class="field">
 	  <input type="submit" value="envoyer le rapport de bug">
